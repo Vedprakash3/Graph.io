@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Visualization</title>
+    <style>
+        /* Chart ko niche lane ke liye margin add karna */
+        #myChart {
+            margin-top: 50px;  /* Adjust this value to move the chart further down */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- DataLabels plugin -->
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Calculate',
+                    data: [25, 50, 75, 100, 125, 150],  // Bar values
+                    backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange']
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false  // Hide legend
+                    },
+                    title: {
+                        display: true,
+                        text: 'Color Distribution'
+                    },
+                    datalabels: {
+                        color: 'black',  // Color of the data labels
+                        anchor: 'end',
+                        align: 'top',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function(value, context) {
+                            return value;  // Display the value on top of each bar
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,  // Y-axis starts from 0
+                        max: 150,  // Y-axis max value is 150
+                        stepSize: 25  // Y-axis increments by 25 (25, 50, 75, ...)
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]  // Include the DataLabels plugin in the chart
+        });
+    </script>
+</body>
+</html>
