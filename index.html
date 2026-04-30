@@ -2,61 +2,100 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization</title>
     <style>
-        /* Chart ko niche lane ke liye margin add karna */
-        #myChart {
-            margin-top: 50px;  /* Adjust this value to move the chart further down */
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .chart-container {
+                margin-top: 20px;
+            }
         }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- DataLabels plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
-    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
+
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [{
                     label: 'Calculate',
-                    data: [25, 50, 75, 100, 125, 150],  // Bar values
+                    data: [25, 50, 75, 100, 125, 150],
                     backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange']
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: true,
                 plugins: {
                     legend: {
-                        display: false  // Hide legend
+                        display: false
                     },
                     title: {
                         display: true,
                         text: 'Color Distribution'
                     },
                     datalabels: {
-                        color: 'black',  // Color of the data labels
+                        color: 'black',
                         anchor: 'end',
                         align: 'top',
                         font: {
                             weight: 'bold'
                         },
-                        formatter: function(value, context) {
-                            return value;  // Display the value on top of each bar
+                        formatter: function(value) {
+                            return value;
                         }
                     }
                 },
                 scales: {
                     y: {
-                        beginAtZero: true,  // Y-axis starts from 0
-                        max: 150,  // Y-axis max value is 150
-                        stepSize: 25  // Y-axis increments by 25 (25, 50, 75, ...)
+                        beginAtZero: true,
+                        max: 150,
+                        ticks: {
+                            stepSize: 25
+                        }
                     }
                 }
             },
-            plugins: [ChartDataLabels]  // Include the DataLabels plugin in the chart
+            plugins: [ChartDataLabels]
         });
     </script>
+
 </body>
 </html>
